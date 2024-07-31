@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PgHunter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="header-container"><h1 class="head-title">Pg Hunter</h1></nav>
+    
+    <div class=".dotted-background"> 
+        <form id="search-form" class="search-bar">
+            <select id="city-select" required>
+                <option value="Coimbatore">Coimbatore</option>
+                <option value="Trichy">Trichy</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Bangalore">Bangalore</option>
+            </select>
+            <input type="text" id="subplace-query" placeholder="Enter subplace (optional)">
+            <button type="submit"><img class="sea" src="./search.png" alt=""></button>
+        </form>
+    </div>
+    
+    <div id="pgs" class="pg-container"></div>
+
+    <!-- <div class="footer"> 
+        <p>Developed By : Rufus</p>
+    </div> -->
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const city = document.getElementById('city-select').value;
+            const subplace = document.getElementById('subplace-query').value;
+            const query = `PG accommodations ${subplace ? subplace + ' ' : ''}${city}`;
+
+            const response = await fetch(`/api/pgs?query=${encodeURIComponent(query)}&city=${encodeURIComponent(city)}`);
+            const pgs = await response.json();
+            const container = document.getElementById('pgs');
+
+            container.innerHTML = ''; // Clear previous results
+
+            pgs.forEach(pg => {
+                const card = document.createElement('div');
+                card.className = 'pg-card';
+                card.innerHTML = `
+                    <h3>${pg.name || 'No name'}</h3>
+                    ${pg.photoUrl ? `<img src="${pg.photoUrl}" alt="${pg.name || 'PG Photo'}">` : ''}
+                    <p>Address: ${pg.formatted_address || 'No address'}</p>
+                    <p>Rating: ${pg.rating || 'No rating'}⭐</p>
+                    <p>Contact: ${pg.formatted_phone_number || 'No contact'}</p>
+                    <p>Bus Stand Distance: ${pg.busStandDistance || 'No distance'}</p>
+                    <p>Railway Station Distance: ${pg.railwayStationDistance || 'No distance'}</p>
+                    <a href="${pg.mapsUrl}" target="_blank"><button class='open-map'>Open Map</button></a>
+                `;
+                container.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
