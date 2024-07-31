@@ -9,25 +9,24 @@ const { Client } = require('@googlemaps/google-maps-services-js');
 const app = express();
 const port = 3000;
 
-const apiKey = process.env.GOOGLE_MAPS_API_KEY; // Replace with your Google Places API key
+const apiKey = process.env.GOOGLE_MAPS_API_KEY; 
 const client = new Client({});
 
 const locations = {
     Coimbatore: {
-        busStand: '10.9986,76.9661', // Replace with actual coordinates
-        railwayStation: '11.0002,76.9663' // Replace with actual coordinates
+        busStand: '10.9986,76.9661', 
+        railwayStation: '11.0002,76.9663'
     },
     Trichy: {
-        busStand: '10.8263,78.6920', //  10.8263,78.6920   10.799324060791584, 78.6803481229337   Replace with actual coordinates
-        railwayStation: '10.8133,78.6956' // Replace with actual coordinates
-    },
+        busStand: '10.8263,78.6920', 
+        railwayStation: '10.8133,78.6956'  
     Chennai: {
-        busStand: '13.0827,80.2707', // Replace with actual coordinates
-        railwayStation: '13.0825,80.2767' // Replace with actual coordinates
+        busStand: '13.0827,80.2707', 
+        railwayStation: '13.0825,80.2767' 
     },
     Bangalore: {
-        busStand: '12.9716,77.5946', // Replace with actual coordinates
-        railwayStation: '12.9786,77.5713' // Replace with actual coordinates
+        busStand: '12.9716,77.5946', 
+        railwayStation: '12.9786,77.5713' 
     }
 };
 
